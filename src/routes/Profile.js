@@ -11,7 +11,9 @@ export default ({userObj}) => {
         history.push("/");
     }
     const onChange = (event) => {
-        const {target: {value}} = event;
+        const {
+            target: {value}
+        } = event;
         setNewDisplayName(value);
     }
     const onSubmit = async (event) => {

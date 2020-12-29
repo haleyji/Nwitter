@@ -18,11 +18,11 @@ const Home = ({userObj}) => {
     }, [])
     const onSubmit = async (event) => {
         event.preventDefault();
-        let attachmentUrl = '';
-        if(attachment!==''){
-            const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
-            const response = await fileRef.putString(attachment, "data_url");
-            attachmentUrl = await response.res.getDownloadURL();
+        let attachmentUrl = "";
+        if(attachment!==""){
+            const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
+            const response = await attachmentRef.putString(attachment, "data_url");
+            attachmentUrl = await response.ref.getDownloadURL();
         }
         const newNweet = {
             text: nweet,
@@ -35,15 +35,21 @@ const Home = ({userObj}) => {
         setAttachment("");
     };
     const onChange = (event) => {
-        const {target: {value}} = event;
+        const {
+            target: {value}
+        } = event;
         setNweet(value);
     }
     const onFileChange = (event) => {
-        const {target: {files}} = event;
+        const {
+            target: {files}
+        } = event;
         const theFile = files[0];
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
-            const {currentTarget: {result}} = finishedEvent;
+            const {
+                currentTarget: {result}
+            } = finishedEvent;
             setAttachment(result);
         }
         reader.readAsDataURL(theFile);
